@@ -29,21 +29,6 @@ ll ifib (ll n)
         return b;
     }
 }
-//Dynamic  Iteration
-class dpfib {
-    public:
-        ll fib (ll n) {
-            ll f[n + 2];
-            f[0] = 0;
-            f[1] = 1;
-
-            for (ll i = 2; i <= n; i++) {
-                f[i] = f[i - 1] + f[i - 2];
-            }
-
-            return f[n];
-        }
-};
 
 // Matrix Multiplication
 void multiply (ll F[2][2], ll M[2][2])
@@ -109,11 +94,9 @@ int main()
 {
     ll n;
     cin >> n;
-    dpfib obj;
-    cout << "Recursive: " << fib (n) << endl; //O(n)
-    cout << "Iterative: " << ifib (n) << endl; //O(n)
-    cout << "Dynamic Iteration: " << obj.fib (n) << endl; //O(n)
-    cout << "Matrix Multiplication: " << lognfib (n) << endl; //O(log n)
+    cout << "Recursive: " << fib (n) << endl; //Exponential
+    cout << "Space Optimised Iteration: " << ifib (n) << endl; //Exponential
+    cout << "Matrix Multiplication: " << lognfib (n) << endl; //O(lon n)
     cout << "Memoized: " << memoizedfib (n) << endl; //O(n) || O(1)
     cout << "Formula: " << bestfib (n); //O(1)
     return 0;
