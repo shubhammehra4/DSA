@@ -1,16 +1,25 @@
 #include <bits/stdc++.h>
+#define ll long long int
 using namespace std;
 
+int fib (int n)
+{
+    if (n <= 1)
+        return n;
+
+    return fib (n - 1) + fib (n - 2);
+}
+
 //Iterative
-int ifib (int n)
+ll ifib (ll n)
 {
     if (n <= 1)
         return n;
     else
     {
-        int a = 0, b = 1, temp;
+        ll a = 0, b = 1, temp;
 
-        for (int i = 2; i <= n; i++)
+        for (ll i = 2; i <= n; i++)
         {
             temp = b;
             b = a + b;
@@ -23,12 +32,12 @@ int ifib (int n)
 //Dynamic  Iteration
 class dpfib {
     public:
-        int fib (n) {
-            int f[n + 2];
-            int f[0] = 0;
-            int f[1] = 1;
+        ll fib (ll n) {
+            ll f[n + 2];
+            f[0] = 0;
+            f[1] = 1;
 
-            for (int i = 2; i <= n; i++) {
+            for (ll i = 2; i <= n; i++) {
                 f[i] = f[i - 1] + f[i - 2];
             }
 
@@ -36,34 +45,25 @@ class dpfib {
         }
 };
 
-//Recursive
-int recfib (int n)
+// Matrix Multiplication
+void multiply (ll F[2][2], ll M[2][2])
 {
-    if (n <= 1)
-        return n;
-    else
-        return (recfib (n - 1) + recfib (n - 2) );
-}
-
-// O(log n)
-void multiply (int F[2][2], int M[2][2])
-{
-    int x =  F[0][0] * M[0][0] + F[0][1] * M[1][0];
-    int y =  F[0][0] * M[0][1] + F[0][1] * M[1][1];
-    int z =  F[1][0] * M[0][0] + F[1][1] * M[1][0];
-    int w =  F[1][0] * M[0][1] + F[1][1] * M[1][1];
+    ll x =  F[0][0] * M[0][0] + F[0][1] * M[1][0];
+    ll y =  F[0][0] * M[0][1] + F[0][1] * M[1][1];
+    ll z =  F[1][0] * M[0][0] + F[1][1] * M[1][0];
+    ll w =  F[1][0] * M[0][1] + F[1][1] * M[1][1];
     F[0][0] = x;
     F[0][1] = y;
     F[1][0] = z;
     F[1][1] = w;
 }
 
-void power (int F[2][2], int n)
+void power (ll F[2][2], ll n)
 {
     if (n == 0 || n == 1)
         return;
 
-    int M[2][2] = {{1, 1}, {1, 0}};
+    ll M[2][2] = {{1, 1}, {1, 0}};
     power (F, n / 2);
     multiply (F, F);
 
@@ -71,9 +71,9 @@ void power (int F[2][2], int n)
         multiply (F, M);
 }
 
-int lognfib (int n)
+ll lognfib (ll n)
 {
-    int F[2][2] = {{1, 1}, {1, 0}};
+    ll F[2][2] = {{1, 1}, {1, 0}};
 
     if (n == 0)
         return 0;
@@ -83,22 +83,23 @@ int lognfib (int n)
 }
 
 //DP
-int term[10000] = {0;
-int memoizedfib(int n)
+ll term[10000] = {0};
+ll memoizedfib (ll n)
 {
-    if(n<=1)
+    if (n <= 1)
         return n;
-    if(term[n]!=0)
+
+    if (term[n] != 0)
         return term[n];
     else
     {
-        term[n] = fib(n - 1) + fib(n - 2); 
+        term[n] = fib (n - 1) + fib (n - 2);
         return term[n];
     }
-
 }
+
 //Formula O(1)
-int bestfib (int n)
+ll bestfib (ll n)
 {
     double phi = (1 + sqrt (5) ) / 2;
     return round (pow (phi, n) / sqrt (5) );
@@ -106,14 +107,14 @@ int bestfib (int n)
 
 int main()
 {
-    int n;
+    ll n;
     cin >> n;
     dpfib obj;
-    cout << ifib (n); //O(n)
-    cout << recfib (n); //O(n)
-    int x = obj.fib (n); //O(n)
-    cout << x;
-    cout << lognfib (n); //O(log n)
-    cout << bestfib (n); //O(1)
+    cout << "Recursive: " << fib (n) << endl; //O(n)
+    cout << "Iterative: " << ifib (n) << endl; //O(n)
+    cout << "Dynamic Iteration: " << obj.fib (n) << endl; //O(n)
+    cout << "Matrix Multiplication: " << lognfib (n) << endl; //O(log n)
+    cout << "Memoized: " << memoizedfib (n) << endl; //O(n) || O(1)
+    cout << "Formula: " << bestfib (n); //O(1)
     return 0;
 }
