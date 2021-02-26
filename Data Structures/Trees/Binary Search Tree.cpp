@@ -19,6 +19,7 @@ class BST {
         void inOrder (BST *);
         void preOrder (BST *);
         void postOrder (BST *);
+        bool isBalanced (BST *, int *);
 }*root = NULL;
 
 BST::BST (int value)
@@ -75,7 +76,6 @@ BST* BST::Delete (BST *p, int key)
 
     return p;
 }
-
 
 int BST::Height (BST *p)
 {
@@ -163,8 +163,26 @@ void BST::postOrder (BST *p)
     cout << p->data << " ";
 }
 
+bool BST::isBalanced (BST *p, int* height)
+{
+    if (!p)
+        return 1;
+
+    int lh = 0, rh = 0;
+    int lFlag = 0, rFlag = 0;
+    lFlag = isBalanced (p->left, &lh);
+    rFlag = isBalanced (p->right, &rh);
+    *height = (lh > rh ? lh : rh) + 1;
+
+    if (abs (lh - rh) >= 2)
+        return 0;
+    else
+        return lFlag && rFlag;
+}
+
 int main()
 {
+    int h = 0;
     BST b;
     root = b.Insert (root, 50);
     b.Insert (root, 30);
@@ -173,6 +191,9 @@ int main()
     b.Insert (root, 70);
     b.Insert (root, 60);
     b.Insert (root, 80);
+    b.Insert (root, 90);
+    b.Insert (root, 85);
+    b.Insert (root, 95);
     b.inOrder (root);
     cout << endl;
     b.preOrder (root);
@@ -183,6 +204,12 @@ int main()
     b.Delete (root, 60);
     b.inOrder (root);
     cout << "\n";
-    cout << b.Height (root);
+    cout << b.Height (root) << endl;
+
+    if (b.isBalanced (root, &h) )
+        cout << "Tree is balanced";
+    else
+        cout << "Tree is not balanced";
+
     return 0;
 }
