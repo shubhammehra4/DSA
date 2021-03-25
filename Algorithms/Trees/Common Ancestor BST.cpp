@@ -50,8 +50,7 @@ int main()
 {
     int h = 0;
     BST b1, b2;
-    root = b1.Insert (root, 50);
-    b1.Insert (root, 46);
+    root = b1.Insert (root, 46);
     b1.Insert (root, 24);
     b1.Insert (root, 22);
     b1.Insert (root, 26);
@@ -60,6 +59,6 @@ int main()
     b1.Insert (root, 47);
     b1.Insert (root, 90);
     b1.Insert (root, 80);
-    cout << b1.LowestCommonAncestor (root, 26, 49)->data;
+    cout << b1.LowestCommonAncestor (root, 22, 24)->data;
     return 0;
 }
