@@ -48,17 +48,17 @@ BST* BST::Delete (BST *p, int key)
     if (p == NULL)
         return NULL;
 
-    if (p->left == NULL && p->right == NULL)
+    if (p->left == NULL && p->right == NULL) // Leaf Node
     {
         free (p);
         return NULL;
     }
 
-    if (key < p->data)
+    if (key < p->data) // search in left sub-tree
         p->left = Delete (p->left, key);
-    else if (key > p->data)
+    else if (key > p->data) // search in right sub-tree
         p->right = Delete (p->right, key);
-    else
+    else // found
     {
         if (Height (p->left) > Height (p->right) )
         {
