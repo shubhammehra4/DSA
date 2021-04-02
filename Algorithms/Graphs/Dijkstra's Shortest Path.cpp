@@ -31,23 +31,23 @@ void Graph::addEdge (int u, int v, int w)
 void Graph::dijkstrasShortestPath (int src)
 {
     priority_queue< iPair, vector <iPair> , greater<iPair> > pq;
-    vector<int> dist (V, INF);
+    vector<int> dist (V, INF); // every node is at infinite distance
     pq.push (make_pair (0, src) );
     dist[src] = 0;
-    vector<bool> f (V, false);
+    vector<bool> flag (V, false);
 
     while (!pq.empty() )
     {
         int u = pq.top().second;
         pq.pop();
-        f[u] = true;
+        flag[u] = true;
 
         for (auto i = adj[u].begin(); i != adj[u].end(); ++i)
         {
             int v = (*i).first;
             int weight = (*i).second;
 
-            if (f[v] == false && dist[v] > dist[u] + weight)
+            if (flag[v] == false && dist[v] > dist[u] + weight)
             {
                 dist[v] = dist[u] + weight;
                 pq.push (make_pair (dist[v], v) );
