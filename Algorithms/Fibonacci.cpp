@@ -78,7 +78,7 @@ ll memoizedfib (ll n)
         return term[n];
     else
     {
-        term[n] = fib (n - 1) + fib (n - 2);
+        term[n] = memoizedfib (n - 1) + memoizedfib (n - 2);
         return term[n];
     }
 }
