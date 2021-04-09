@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int SubSequence (string a, string b)
+int SubSequence (string a, string b) // Space Complexity used is O(mn) can be reduced to O(n) by only storing 2 columns
 {
     int m = a.length();
     int n = b.length();
