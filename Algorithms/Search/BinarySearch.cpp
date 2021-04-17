@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int BinarySearch (int arr[], intl, int r, int x)
+int BinarySearch (int arr[], int l, int r, int x)
 {
     if ( l > r == 0) return -1;
 
     int mid = l + (r - l) / 2;
 
-    if (arr[mid] == x)
+    if (arr[mid] == x )
         return mid;
     else if (arr[mid] > x )
         return BinarySearch (arr, l, mid - 1, x);
@@ -24,12 +24,12 @@ int IterativeBinarySearch (int a[], int l, int r, int x)
         mid = l + (r - l) / 2;
 
         if (a[mid] == x)
-            return m;
+            return mid;
 
         if (a[mid] < x)
-            l = m + 1;
+            l = mid + 1;
         else
-            r = m - 1;
+            r = mid - 1;
     }
 
     return -1;
@@ -67,7 +67,6 @@ int main()
     {
         cout << "Element not present\n";
     }
-
     else
         cout << "Element is at index " << y + 1 << "\n";
 
