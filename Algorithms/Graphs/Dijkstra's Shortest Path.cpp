@@ -4,16 +4,14 @@ using namespace std;
 
 typedef pair<int, int> iPair;
 
-
 class Graph {
         int V;
         list< pair<int, int> > *adj;
-
     public:
         Graph (int V);
         void addEdge (int u, int v, int w);
-
-        void dijkstrasShortestPath (int s);
+        void dijkstrasShortestPath (int s, int e);
+        void printPath (vector<int> prev, vector<int>dist, int s, int e);
 };
 
 Graph::Graph (int V)
@@ -28,19 +26,39 @@ void Graph::addEdge (int u, int v, int w)
     adj[v].push_back (make_pair (u, w) );
 }
 
-void Graph::dijkstrasShortestPath (int src)
+void Graph::printPath (vector<int> prev, vector<int> d, int src, int end)
+{
+    vector<int> path;
+
+    if (d[end] == INF)
+        return;
+
+    for (int i = end; i != -1; i = prev[i])
+        path.push_back (i);
+
+    cout << "Path is \n";
+
+    for (int i = path.size() - 1; i >= 0; i--)
+        cout << path[i] << " ";
+}
+
+void Graph::dijkstrasShortestPath (int src, int end)
 {
     priority_queue< iPair, vector <iPair> , greater<iPair> > pq;
     vector<int> dist (V, INF); // every node is at infinite distance
     pq.push (make_pair (0, src) );
     dist[src] = 0;
     vector<bool> flag (V, false);
+    vector<int> prev (V, -1);
 
     while (!pq.empty() )
     {
         int u = pq.top().second;
+        int w = pq.top().first;
         pq.pop();
         flag[u] = true;
+
+        if (dist[u] < w) continue;
 
         for (auto i = adj[u].begin(); i != adj[u].end(); ++i)
         {
@@ -49,16 +67,21 @@ void Graph::dijkstrasShortestPath (int src)
 
             if (flag[v] == false && dist[v] > dist[u] + weight)
             {
+                prev[v] = u;
                 dist[v] = dist[u] + weight;
                 pq.push (make_pair (dist[v], v) );
             }
         }
+
+        if (u == end) break; // Optimisation step to stop further processing
     }
 
     cout << "Vertex Distance from Source\n";
 
     for (int i = 0; i < V; ++i)
-        cout << i << "\t\t" << dist[i] << endl;
+        cout << i << "\t\t" << dist[i] << "\t" << prev[i] << endl;
+
+    printPath (prev, dist, src, end);
 }
 
 int main()
@@ -79,6 +102,6 @@ int main()
     g.addEdge (6, 7, 1);
     g.addEdge (6, 8, 6);
     g.addEdge (7, 8, 7);
-    g.dijkstrasShortestPath (0);
+    g.dijkstrasShortestPath (0, 7);
     return 0;
 }
