@@ -1,77 +1,86 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define INF 0x3f3f3f3f
 
-typedef pair<int, int> iPair;
-
+struct Edge { int src, dest, weight;};
 
 class Graph {
-        int V;
-        list< pair<int, int> > *adj;
-
+        int V, E;
+        struct Edge* edge;
+        int cnt;
     public:
-        Graph (int V);
-        void addEdge (int u, int v, int w);
-
-        void bellmanFord (int s);
+        Graph (int V, int E);
+        void addEdge (int src, int dest, int w);
+        void BellmanFord (int src);
+        void printArr (vector<int> dist);
 };
 
-Graph::Graph (int V)
+Graph::Graph (int V, int E)
 {
     this->V = V;
-    adj = new list<iPair> [V];
+    this->E = E;
+    cnt = 0;
+    edge = new Edge[E];
 }
 
-void Graph::addEdge (int u, int v, int w)
+void Graph::addEdge (int a, int b, int w)
 {
-    adj[u - 1].push_back (make_pair (v - 1, w) );
+    edge[cnt++] = {a, b, w};
 }
 
-void Graph::bellmanFord (int src)
+void Graph::printArr (vector<int> dist)
 {
-    vector<int> dist (V, INF);
+    printf ("Vertex Distance from Source\n");
+
+    for (int i = 0; i < dist.size(); ++i)
+        cout << i << "\t\t" << dist[i] << "\n";
+}
+
+void Graph::BellmanFord (int src)
+{
+    vector<int> dist (V, INT_MAX);
     dist[src] = 0;
 
     for (int i = 0; i < V - 1; i++)
     {
-        for (int k = 0; k < V; k++)
+        for (int j = 0; j < E; j++)
         {
-            for (auto j = adj[k].begin(); j != adj[k].end(); ++j)
-            {
-                int v = j->first;
-                int weight = j->second;
+            int u = edge[j].src;
+            int v = edge[j].dest;
+            int weight = edge[j].weight;
 
-                if (dist[i] != INF &&  dist[v] > dist[i] + weight )
-                    dist[v] = dist[i] + weight;
-
-                // dist[v] = min (dist[v], dist[i] + weight);
-            }
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
+                dist[v] = dist[u] + weight;
         }
-
-        for (int i = 0; i < V; i++)
-        {
-            cout << dist[i] << " ";
-        }
-
-        cout << endl;
     }
+
+    for (int i = 0; i < E; i++)
+    {
+        int u = edge[i].src;
+        int v = edge[i].dest;
+        int weight = edge[i].weight;
+
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
+        {
+            printf ("Graph contains negative weight cycle");
+            return;
+        }
+    }
+
+    printArr (dist);
+    return;
 }
 
 int main()
 {
-    int V = 8;
-    Graph g (V);
-    g.addEdge (1, 2, 10);
-    g.addEdge (1, 8, 8);
-    g.addEdge (2, 6, 2);
-    g.addEdge (3, 2, 1);
-    g.addEdge (3, 4, 1);
-    g.addEdge (4, 5, 3);
-    g.addEdge (5, 6, -1);
-    g.addEdge (6, 3, -2);
-    g.addEdge (7, 2, -4);
-    g.addEdge (7, 6, -1);
-    g.addEdge (8, 7, 1);
-    g.bellmanFord (0);
+    Graph g (5, 8);
+    g.addEdge (0, 1, -1);
+    g.addEdge (0, 2, 4);
+    g.addEdge (1, 2, 3);
+    g.addEdge (1, 3, 2);
+    g.addEdge (1, 4, 2);
+    g.addEdge (3, 2, 5);
+    g.addEdge (3, 1, 1);
+    g.addEdge (4, 3, -3);
+    g.BellmanFord (0);
     return 0;
 }
