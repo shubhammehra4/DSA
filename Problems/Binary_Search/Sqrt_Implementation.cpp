@@ -2,7 +2,7 @@
 #define ll long long
 using namespace std;
 
-int sqrt (int x)
+int sqrt(int x)
 {
     if (x == 0 || x == 1)
         return x;
@@ -28,10 +28,8 @@ int sqrt (int x)
     return ans;
 }
 
-
-
 int main()
 {
-    cout << sqrt (9767564789);
+    cout << sqrt(9767564789);
     return 0;
 }

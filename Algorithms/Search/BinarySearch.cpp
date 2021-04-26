@@ -57,6 +57,36 @@ int IterativeBinarySearchLessOperation (int a[], int l, int r, int x)
         return -1;
 }
 
+int FirstOrLastBinarySearch (vector<int> arr, int x, int n, bool last)
+{
+    int low = 0, high = n - 1, res = -1;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[mid] > x)
+            high = mid - 1;
+        else if (arr[mid] < x)
+            low = mid + 1;
+        else
+        {
+            res = mid;
+
+            if (last)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+    }
+
+    return res;
+}
+
 int main()
 {
     int n = 10;

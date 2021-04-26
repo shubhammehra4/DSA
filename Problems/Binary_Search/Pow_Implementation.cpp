@@ -2,7 +2,7 @@
 using namespace std;
 
 #define ll long long int
-int pow (int x, int n, int d)
+int pow(int x, int n, int d)
 {
     if (d == 1)
         return 0;
@@ -15,7 +15,7 @@ int pow (int x, int n, int d)
     while (n > 0)
     {
         if (n & 1) // odd
-            ans = ( (ans) * y) % d;
+            ans = ((ans)*y) % d;
 
         y = (y * y) % d;
 
@@ -27,16 +27,15 @@ int pow (int x, int n, int d)
 
     if (ans < 0)
     {
-        ans = (d - abs (ans) % d);
+        ans = (d - abs(ans) % d);
         return ans;
     }
 
     return ans;
 }
 
-
 int main()
 {
-    cout << pow (2, 6, 3);
+    cout << pow(2, 6, 3);
     return 0;
 }

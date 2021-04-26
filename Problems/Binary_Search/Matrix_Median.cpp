@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int findMedian (vector<vector<int> > &A)
+int findMedian(vector<vector<int>> &A)
 {
     int n = A.size();
     int m = A[0].size();
@@ -24,7 +24,7 @@ int findMedian (vector<vector<int> > &A)
         int count = 0;
 
         for (int i = 0; i < n; ++i)
-            count += upper_bound (A[i].begin(), A[i].end(), mid) - A[i].begin();
+            count += upper_bound(A[i].begin(), A[i].end(), mid) - A[i].begin();
 
         // upper bound returns first element greter than mid
 
@@ -36,7 +36,6 @@ int findMedian (vector<vector<int> > &A)
 
     return min;
 }
-
 
 int main()
 {
