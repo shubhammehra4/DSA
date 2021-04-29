@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "memory": "cpp",
+        "string_view": "cpp",
+        "regex": "cpp",
+        "typeinfo": "cpp"
+    }
+}
