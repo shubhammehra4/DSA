@@ -3,7 +3,11 @@ using namespace std;
 
 #define V 5
 
-int minKey (int cost[], bool mstSet[])
+// ST
+// e = no. of edges, v = no. of vertices, cy = cycles in a graph
+// no. of ST's are = eC(v-1) - cy
+
+int minKey(int cost[], bool mstSet[])
 {
     int min = INT_MAX, min_index;
 
@@ -14,7 +18,7 @@ int minKey (int cost[], bool mstSet[])
     return min_index;
 }
 
-void printMST (int mstFinal[], int graph[V][V])
+void printMST(int mstFinal[], int graph[V][V])
 {
     cout << "Edge \tCost\n";
 
@@ -22,7 +26,7 @@ void printMST (int mstFinal[], int graph[V][V])
         cout << mstFinal[i] << " - " << i << " \t" << graph[i][mstFinal[i]] << " \n";
 }
 
-void primMST (int graph[V][V])
+void primMST(int graph[V][V])
 {
     int mstFinal[V];
     int cost[V];
@@ -36,7 +40,7 @@ void primMST (int graph[V][V])
 
     for (int count = 0; count < V - 1; count++)
     {
-        int u = minKey (cost, mstSet);
+        int u = minKey(cost, mstSet);
         mstSet[u] = true;
 
         for (int v = 0; v < V; v++)
@@ -46,19 +50,16 @@ void primMST (int graph[V][V])
         }
     }
 
-    printMST (mstFinal, graph);
+    printMST(mstFinal, graph);
 }
 
 int main()
 {
-    int graph[V][V] =
-    {
-        { 0, 2, 0, 6, 0 },
-        { 2, 0, 3, 8, 5 },
-        { 0, 3, 0, 0, 7 },
-        { 6, 8, 0, 0, 9 },
-        { 0, 5, 7, 9, 0 }
-    };
-    primMST (graph);
+    int graph[V][V] = {{0, 2, 0, 6, 0},
+                       {2, 0, 3, 8, 5},
+                       {0, 3, 0, 0, 7},
+                       {6, 8, 0, 0, 9},
+                       {0, 5, 7, 9, 0}};
+    primMST(graph);
     return 0;
 }
