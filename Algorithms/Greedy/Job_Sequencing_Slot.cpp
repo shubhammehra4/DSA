@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Similar to Job Sequencing in DP
+// this is slot based
+
 struct Job
 {
     string id;
