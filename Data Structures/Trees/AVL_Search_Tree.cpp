@@ -4,13 +4,15 @@ using namespace std;
 
 class AVLBST
 {
+private:
     int data;
     AVLBST *left, *right;
     int height;
 
 public:
-    AVLBST() : data(0), left(NULL), right(NULL), height(1){};
+    AVLBST() : data(0), left(NULL), right(NULL){};
     AVLBST(int);
+
     AVLBST *Insert(AVLBST *, int);
     int NodeHeight(AVLBST *);
     int BalanceFactor(AVLBST *);
@@ -36,19 +38,19 @@ int AVLBST::NodeHeight(AVLBST *p)
 {
     if (p == NULL)
         return 0;
-    int l = NodeHeight(p->left);
-    int r = NodeHeight(p->right);
-
-    return max(l, r) + 1;
+    int l, r;
+    l = NodeHeight(p->left);
+    r = NodeHeight(p->right);
+    return l > r ? l + 1 : r + 1;
 }
 
 int AVLBST::BalanceFactor(AVLBST *p)
 {
     if (p == NULL)
         return 0;
-
-    int l = NodeHeight(p->left);
-    int r = NodeHeight(p->right);
+    int l, r;
+    l = NodeHeight(p->left);
+    r = NodeHeight(p->right);
     return l - r;
 }
 
@@ -58,8 +60,8 @@ AVLBST *AVLBST::LLRotation(AVLBST *p)
     AVLBST *plr = pl->right;
     pl->right = p;
     p->left = plr;
-    // p->height = NodeHeight(p);
-    // pl->height = NodeHeight(pl);
+    p->height = NodeHeight(p);
+    pl->height = NodeHeight(pl);
 
     if (p == root)
         root = pl;
@@ -73,8 +75,8 @@ AVLBST *AVLBST::RRRotation(AVLBST *p)
     AVLBST *prl = pr->left;
     pr->left = p;
     p->right = prl;
-    // p->height = NodeHeight(p);
-    // pr->height = NodeHeight(pr);
+    p->height = NodeHeight(p);
+    pr->height = NodeHeight(pr);
 
     if (p == root)
         root = pr;
@@ -90,9 +92,9 @@ AVLBST *AVLBST::LRRotation(AVLBST *p)
     p->left = plr->right;
     plr->left = pl;
     plr->right = p;
-    // p->height = NodeHeight(p);
-    // plr->height = NodeHeight(plr);
-    // pl->height = NodeHeight(pl);
+    p->height = NodeHeight(p);
+    plr->height = NodeHeight(plr);
+    pl->height = NodeHeight(pl);
 
     if (p == root)
         root = plr;
@@ -108,9 +110,9 @@ AVLBST *AVLBST::RLRotation(AVLBST *p)
     p->right = prl->left;
     prl->right = pr;
     prl->left = p;
-    // p->height = NodeHeight(p);
-    // prl->height = NodeHeight(prl);
-    // pr->height = NodeHeight(pr);
+    p->height = NodeHeight(p);
+    prl->height = NodeHeight(prl);
+    pr->height = NodeHeight(pr);
 
     if (p == root)
         root = prl;
@@ -130,19 +132,13 @@ AVLBST *AVLBST::Insert(AVLBST *p, int value)
 
     p->height = NodeHeight(p);
 
-    int nodeBalance = BalanceFactor(p);
-    int nodeLeftBalance = BalanceFactor(p->left);
-
-    if (nodeBalance == 2 && nodeLeftBalance == 1) //LL
+    if (BalanceFactor(p) == 2 && BalanceFactor(p->left) == 1) //LL
         return LLRotation(p);
-    else if (nodeBalance == 2 && nodeLeftBalance == -1) //LR
+    else if (BalanceFactor(p) == 2 && BalanceFactor(p->left) == -1) //LR
         return LRRotation(p);
-
-    int nodeRightBalance = BalanceFactor(p->right);
-
-    if (nodeBalance == -2 && nodeRightBalance == -1) //RR
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->right) == -1) //RR
         return RRRotation(p);
-    else if (nodeBalance == -2 && nodeRightBalance == 1) //Rl
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->right) == 1) //Rl
         return RLRotation(p);
 
     return p;
@@ -200,23 +196,19 @@ AVLBST *AVLBST::Delete(AVLBST *p, int key)
 
     p->height = NodeHeight(p);
 
-    int nodeBalance = BalanceFactor(p);
-    int nodeLeftBalance = BalanceFactor(p->left);
-    int nodeRightBalance = BalanceFactor(p->right);
-
-    if (nodeBalance == 2 && (nodeLeftBalance == 1 || nodeLeftBalance == 0)) //LL
+    if (BalanceFactor(p) == 2 && (BalanceFactor(p->left) == 1 || BalanceFactor(p->left) == 0)) //LL
         return LLRotation(p);
-    else if (nodeBalance == 2 && nodeLeftBalance == -1) //LR
+    else if (BalanceFactor(p) == 2 && BalanceFactor(p->left) == -1) //LR
         return LRRotation(p);
-    else if (nodeBalance == -2 && (nodeRightBalance == -1 || nodeRightBalance == 0)) //RR
+    else if (BalanceFactor(p) == -2 && (BalanceFactor(p->right) == -1 || BalanceFactor(p->right) == 0)) //RR
         return RRRotation(p);
-    else if (nodeBalance == -2 && nodeRightBalance == 1) //Rl
+    else if (BalanceFactor(p) == -2 && BalanceFactor(p->right) == 1) //Rl
         return RLRotation(p);
 
     return p;
 }
 
-void AVLBST::print2DUtil(AVLBST *root, int space)
+void AVLBST ::print2DUtil(AVLBST *root, int space)
 {
     if (root == NULL)
         return;
@@ -232,7 +224,7 @@ void AVLBST::print2DUtil(AVLBST *root, int space)
     print2DUtil(root->left, space);
 }
 
-void AVLBST::print2D(AVLBST *root)
+void AVLBST ::print2D(AVLBST *root)
 {
     print2DUtil(root, 0);
 }
@@ -240,15 +232,15 @@ void AVLBST::print2D(AVLBST *root)
 int main()
 {
     AVLBST b;
-    root = b.Insert(root, 10);
+    root = b.Insert(root, 5);
+    b.Insert(root, 10);
+    b.Insert(root, 15);
     b.Insert(root, 20);
-    b.Insert(root, 30);
     b.Insert(root, 25);
-    b.Insert(root, 28);
     b.Insert(root, 27);
-    b.Insert(root, 5);
-    // b.Delete(root, 25);
+    b.Insert(root, 30);
+    // b.Delete (root, 5);
+    // cout << root->data;
     b.print2D(root);
-
     return 0;
 }
