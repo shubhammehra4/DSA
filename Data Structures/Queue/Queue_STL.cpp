@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void showq (queue <int> gq)
+void showq(queue<int> gq)
 {
-	queue <int> g = gq;
+	queue<int> g = gq;
 
-	while (!g.empty() )
+	while (!g.empty())
 	{
 		cout << '\t' << g.front();
 		g.pop();
@@ -16,18 +16,17 @@ void showq (queue <int> gq)
 
 int main()
 {
-	queue <int> gquiz;
-	gquiz.push (10);
-	gquiz.push (20);
-	gquiz.push (30);
+	queue<int> gquiz;
+	gquiz.push(10);
+	gquiz.push(20);
+	gquiz.push(30);
 	cout << "The queue gquiz is : ";
-	showq (gquiz);
+	showq(gquiz);
 	cout << "\ngquiz.size() : " << gquiz.size();
 	cout << "\ngquiz.front() : " << gquiz.front();
 	cout << "\ngquiz.back() : " << gquiz.back();
 	cout << "\ngquiz.pop() : ";
 	gquiz.pop();
-	showq (gquiz);
+	showq(gquiz);
 	return 0;
 }
-
