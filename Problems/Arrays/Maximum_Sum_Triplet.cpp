@@ -1,3 +1,8 @@
+// Given an array A containing N integers.
+// You need to find the maximum sum of triplet(Ai + Aj + Ak)
+// such that 0 <= i < j < k < N and Ai < Aj < Ak.
+
+//  If no such triplet exist return 0.
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,7 +27,7 @@ int maximumSumTriplet(vector<int> &A)
         {
             auto itr = s.find(A[i]);
             if (itr != s.begin())
-                ans = max(ans, (A[i] + (*(--itr)) + right[i]));
+                ans = max(ans, (A[i] + *(--itr) + right[i]));
         }
     }
     return ans;
