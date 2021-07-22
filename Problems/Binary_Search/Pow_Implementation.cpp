@@ -34,6 +34,27 @@ int pow(int x, int n, int d)
     return ans;
 }
 
+// for -ve n
+int pow2(double x, int n)
+{
+    long double res = 1;
+    long long int modn = abs(n);
+    double y = x;
+    while (modn > 0)
+    {
+        if (modn & 1) // odd
+            res *= y;
+
+        y = y * y;
+        modn = modn >> 1; // n/2
+    }
+
+    if (n > 0)
+        return res;
+    else
+        return (long double)1 / res;
+}
+
 int main()
 {
     cout << pow(2, 6, 3);
