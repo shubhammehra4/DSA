@@ -26,7 +26,7 @@ vector<vector<int>> subsets(vector<int> &A)
 
 int main()
 {
-    vector<int> array = {1, 2, 3, 4, 5};
+    vector<int> array = {1, 2, 2, 3, 4, 5};
 
     vector<vector<int>> res = subsets(array);
 
