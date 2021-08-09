@@ -29,8 +29,8 @@ void dfsPathUtil(TreeNode *root, int targetSum, vector<int> &path)
     }
     else
     {
-        dfs(root->left, targetSum, path);
-        dfs(root->right, targetSum, path);
+        dfsPathUtil(root->left, targetSum, path);
+        dfsPathUtil(root->right, targetSum, path);
     }
 
     path.pop_back();
