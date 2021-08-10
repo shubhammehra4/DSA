@@ -24,7 +24,7 @@ int main()
 {
 
     string seq = "GEEKSFORGEEKS";
-    int n = strlen(seq);
+    int n = seq.length();
     cout << "The length of the LPS is "
          << lps(seq, 0, n - 1);
 
