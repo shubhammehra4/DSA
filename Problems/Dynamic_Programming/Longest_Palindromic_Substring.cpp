@@ -20,6 +20,42 @@ int lps(string seq, int i, int j)
     return max(lps(seq, i, j - 1), lps(seq, i + 1, j));
 }
 
+string longestPalindrome(string s)
+{
+    string res = "";
+    int d;
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        d = 1;
+        string curr = "";
+        while (i - d >= 0 && i + d < s.size() && s[i - d] == s[i + d])
+            d++;
+
+        d--;
+        curr = s.substr(i - d, 2 * d + 1);
+
+        if (curr.size() > res.size())
+            res = curr;
+    }
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        d = 0;
+        while (i + d + 1 < s.size() && i - d >= 0 && s[i - d] == s[i + d + 1])
+            d++;
+
+        d--;
+        string curr = "";
+        curr = s.substr(i - d, 2 * d + 2);
+
+        if (curr.size() > res.size())
+            res = curr;
+    }
+
+    return res;
+}
+
 int main()
 {
 
