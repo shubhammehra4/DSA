@@ -1,71 +1,81 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <bits/stdc++.h>
+using namespace std;
 
-struct Node
+struct QNode
 {
 	int data;
-	struct Node *next;
-} *front = NULL, *rear = NULL;
-
-void enqueue(int x)
-{
-	struct Node *t;
-	t = (struct Node *)malloc(sizeof(struct Node));
-	if (t == NULL)
-		printf("Queue is full\n");
-	else
+	QNode *next;
+	QNode(int d)
 	{
-		t->data = x;
-		t->next = NULL;
-		if (front == NULL)
-			front = rear = t;
-		else
+		data = d;
+		next = NULL;
+	}
+};
+
+struct Queue
+{
+	QNode *front, *rear;
+	Queue()
+	{
+		front = rear = NULL;
+	}
+
+	void enQueue(int x)
+	{
+		QNode *temp = new QNode(x);
+
+		if (rear == NULL)
 		{
-			rear->next = t;
-			rear = t;
+			front = rear = temp;
+			return;
 		}
-	}
-}
 
-int dequeue()
-{
-	int x = -1;
-	struct Node *t;
-	if (front == NULL)
-		printf("Queue is empty\n");
-	else
+		rear->next = temp;
+		rear = temp;
+	}
+
+	void deQueue()
 	{
-		x = front->data;
-		t = front;
+		if (front == NULL)
+			return;
+
+		QNode *temp = front;
 		front = front->next;
-		free(t);
-	}
-	return x;
-}
 
-void Display()
-{
-	struct Node *p = front;
-	while (p)
-	{
-		printf("%d ", p->data);
-		p = p->next;
+		if (front == NULL)
+			rear = NULL;
+
+		delete (temp);
 	}
-	printf("\n");
-}
+
+	int front()
+	{
+		if (front == NULL)
+			return -1;
+		return front->data;
+	}
+
+	int back()
+	{
+		if (rear == NULL)
+			return -1;
+		return rear->data;
+	}
+};
 
 int main()
 {
-	enqueue(10);
-	enqueue(20);
-	enqueue(30);
-	enqueue(40);
-	enqueue(50);
 
-	Display();
-
-	dequeue();
-	Display();
-
-	return 0;
+	Queue q;
+	q.enQueue(10);
+	q.enQueue(20);
+	q.deQueue();
+	q.deQueue();
+	q.enQueue(30);
+	q.enQueue(40);
+	q.enQueue(50);
+	q.deQueue();
+	cout << "Queue Front : " << (q.front)->data << endl;
+	cout << "Queue Rear : " << (q.rear)->data;
 }
+// This code is contributed by rathbhupendra
