@@ -7,6 +7,7 @@ struct ListNode
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 // Remove all duplicate values
@@ -28,20 +29,21 @@ ListNode *deleteDuplicates2(ListNode *head)
 {
     if (head == NULL)
         return NULL;
-    ListNode *fakeHead = new ListNode(-1);
-    fakeHead->next = head;
-    ListNode *pre = fakeHead;
-    ListNode *cur = head;
-    while (cur != NULL)
-    {
-        while (cur->next != NULL && cur->val == cur->next->val)
-            cur = cur->next;
 
-        if (pre->next == cur)
-            pre = pre->next;
+    ListNode *fakeHead = new ListNode(-1, head);
+    ListNode *prev = fakeHead;
+
+    while (head)
+    {
+        while (head->next && head->val == head->next->val)
+            head = head->next;
+
+        if (prev->next == head)
+            prev = prev->next;
         else
-            pre->next = cur->next;
-        cur = cur->next;
+            prev->next = head->next;
+
+        head = head->next;
     }
     return fakeHead->next;
 }
