@@ -1,19 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Optimization:
+    The sum of i and j is constant and unique for each right diagonal where i is the row of element and j is the
+    column of element.
+
+    The difference of i and j is constant and unique for each left diagonal where i and j are row and column of element respectively.
+*/
+
 class NQueens
 {
     int N;
     vector<vector<int>> board;
+    /* ld is an array where its indices indicate row-col+N-1
+    (N-1) is for shifting the difference to store negative 
+    indices */
     vector<int> ld;
+    /* rd is an array where its indices indicate row+col
+    and used to check whether a queen can be placed on 
+    right diagonal or not*/
     vector<int> rd;
+    /*column array where its indices indicates column and 
+    used to check whether a queen can be placed in that
+    row or not*/
     vector<int> cl;
 
 public:
     NQueens(int N);
-    void solve();
-    bool solveUtil(int col);
     bool Boundcheck(int row, int col);
+    bool solveUtil(int col);
+    void solve();
     void printBoard();
 };
 
@@ -26,21 +43,6 @@ NQueens::NQueens(int N)
     cl.resize(2 * N + 1, 0);
 }
 
-void NQueens::printBoard()
-{
-    for (int i = 0; i < N; i++)
-    {
-        for (int j = 0; j < N; j++)
-        {
-            if (board[i][j])
-                cout << "Q ";
-            else
-                cout << "- ";
-        }
-
-        cout << "\n";
-    }
-}
 // Naive
 bool NQueens::Boundcheck(int row, int col)
 {
@@ -68,6 +70,17 @@ bool NQueens::solveUtil(int col)
 
     for (int i = 0; i < N; i++)
     {
+        // Naive Method
+        // if (Boundcheck(i, col))
+        // {
+        //     board[i][col] = 1;
+
+        //     if (solveUtil(col + 1)) //Recursion
+        //         return true;
+
+        //     board[i][col] = 0; //Bounds are not satisfied
+        // }
+
         if ((ld[i - col + N - 1] != 1 && rd[i + col] != 1) && cl[i] != 1)
         {
             board[i][col] = 1;
@@ -79,15 +92,6 @@ bool NQueens::solveUtil(int col)
             board[i][col] = 0; // BACKTRACK
             ld[i - col + N - 1] = rd[i + col] = cl[i] = 0;
         }
-        // if (Boundcheck(i, col))
-        // {
-        //     board[i][col] = 1;
-
-        //     if (solveUtil(col + 1)) //Recursion
-        //         return true;
-
-        //     board[i][col] = 0; //Bounds are not satisfied
-        // }
     }
 
     return false;
@@ -101,9 +105,25 @@ void NQueens::solve()
         printBoard();
 }
 
+void NQueens::printBoard()
+{
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (board[i][j])
+                cout << "Q ";
+            else
+                cout << "- ";
+        }
+
+        cout << "\n";
+    }
+}
+
 int main()
 {
-    NQueens s(10);
-    s.solve();
+    NQueens q(11);
+    q.solve();
     return 0;
 }
