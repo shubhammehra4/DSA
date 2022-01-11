@@ -8,12 +8,8 @@ int main()
     long long ans = 0, cnt = 0;
     for (long long i = 1; i < s.size(); i++)
     {
-        if (s[i] == s[i - 1])
-            cnt++;
-        else
-            cnt = 0;
-        if (cnt > ans)
-            ans = cnt;
+        cnt = s[i] == s[i - 1] ? cnt + 1 : 0;
+        ans = max(ans, cnt);
     }
 
     cout << ans + 1;

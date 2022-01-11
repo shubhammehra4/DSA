@@ -13,12 +13,14 @@ int main()
 
     for (long long i = 1; i < n; i++)
     {
-        if (arr[i] < arr[i - 1])
+        long long diff = arr[i - 1] - arr[i];
+        if (diff > 0)
         {
-            ans += arr[i - 1] - arr[i];
-            arr[i] = arr[i - 1];
+            ans += diff;
+            arr[i] += diff;
         }
     }
+
     cout << ans;
 
     return 0;
