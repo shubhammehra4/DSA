@@ -13,6 +13,17 @@
         "valarray": "cpp",
         "array": "cpp",
         "initializer_list": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "list": "cpp",
+        "forward_list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "tuple": "cpp",
+        "variant": "cpp",
+        "new": "cpp",
+        "cmath": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "shared_mutex": "cpp"
     }
 }
