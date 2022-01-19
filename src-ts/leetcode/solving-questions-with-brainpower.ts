@@ -27,7 +27,8 @@ const mostPoints = (questions: number[][]): number => {
 
 const mostPointsIter = (questions: number[][]): number => {
   const n = questions.length;
-  const memo = new Array(n + 1).fill(0);
+  // const memo = new Array(n + 1).fill(0);
+  const memo = Array(n + 1);
   memo[n] = 0;
 
   for (let idx = n - 1; idx >= 0; idx--) {
