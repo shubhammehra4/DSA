@@ -3,3 +3,6 @@
 *.dll
 *.txt
 .cph
+node_modules
+package-lock.json
+dist
