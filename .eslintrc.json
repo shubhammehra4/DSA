@@ -42,6 +42,7 @@
     ],
     "max-classes-per-file": ["error", { "ignoreExpressions": true, "max": 2 }],
     "no-plusplus": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-restricted-syntax": "off"
   }
 }

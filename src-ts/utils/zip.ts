@@ -15,13 +15,13 @@ export function* zip<T extends any[]>(...toZip: Iterableify<T>): Generator<T> {
   }
 }
 
-export function* zipLong<T extends any[]>(...toZip: Iterableify<T>): Generator<T> {
+export function* zipLongest<T extends any[]>(...toZip: Iterableify<T>): Generator<T> {
   const iterators = toZip.map((i) => i[Symbol.iterator]());
 
   while (true) {
     const results = iterators.map((i) => i.next());
 
-    if (!results.some(({ done }) => done)) {
+    if (results.every(({ done }) => done)) {
       break;
     }
 
