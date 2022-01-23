@@ -6,7 +6,6 @@ export function* zip<T extends any[]>(...toZip: Iterableify<T>): Generator<T> {
   while (true) {
     const results = iterators.map((i) => i.next());
 
-    // If any of the iterators are done, we should stop.
     if (results.some(({ done }) => done)) {
       break;
     }
