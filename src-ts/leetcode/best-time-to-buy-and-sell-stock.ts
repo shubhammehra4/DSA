@@ -1,5 +1,5 @@
 function maxProfit(prices: number[]): number {
-  let minPrice = Infinity;
+  let minPrice = INT_MAX;
   let profit = 0;
 
   for (const price of prices) {
