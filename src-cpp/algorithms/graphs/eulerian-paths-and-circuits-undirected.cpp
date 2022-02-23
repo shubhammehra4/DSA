@@ -22,7 +22,7 @@ auto findEulerianPath(vector<vector<int>> &adjLists, int v, int e, string varian
         int oddDegreeNodes = 0;
         for (auto d : degree)
         {
-            oddDegreeNodes = d % 2;
+            oddDegreeNodes += d % 2;
             if (oddDegreeNodes > 2)
                 return false;
         }
