@@ -3,7 +3,7 @@ using namespace std;
 
 #define INF 0x3f3f3f3f
 
-auto FloydWarshall(vector<vector<int>> &adjMatrix)
+auto floydWarshall(vector<vector<int>> &adjMatrix)
 {
     int n = adjMatrix.size();
     vector<vector<int>> dp(n, vector<int>(n));

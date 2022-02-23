@@ -1,20 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct edge
+struct WeightedEdge
 {
-    int dest;
-    int weight;
+    int to;
+    int weight; // cost to reach
 };
 
-vector<int> kahnTopologicalSorting(vector<vector<edge>> &adjLists)
+vector<int> kahnTopologicalSorting(vector<vector<WeightedEdge>> &adjLists)
 {
     int n = adjLists.size();
     vector<int> inDegree(n, 0);
 
     for (int i = 0; i < n; i++)
         for (auto edge : adjLists[i])
-            inDegree[edge.dest] += 1;
+            inDegree[edge.to] += 1;
 
     queue<int> q;
 
@@ -32,10 +32,10 @@ vector<int> kahnTopologicalSorting(vector<vector<edge>> &adjLists)
 
         for (auto edge : adjLists[node])
         {
-            inDegree[edge.dest] -= 1;
+            inDegree[edge.to] -= 1;
 
-            if (inDegree[edge.dest] == 0)
-                q.push(edge.dest);
+            if (inDegree[edge.to] == 0)
+                q.push(edge.to);
         }
     }
 
@@ -47,11 +47,11 @@ vector<int> kahnTopologicalSorting(vector<vector<edge>> &adjLists)
 
 // NP Hard for general graph
 // Liner for a DAG
-vector<int> dagLongestPath(vector<vector<edge>> &adjLists, int start)
+vector<int> dagLongestPath(vector<vector<WeightedEdge>> &adjLists, int start)
 {
     int n = adjLists.size();
 
-    vector<vector<edge>> modifiedAdjLists(adjLists);
+    vector<vector<WeightedEdge>> modifiedAdjLists(adjLists);
 
     // invert the weights by -ve sign and find the shorted path
     for (auto adjList : modifiedAdjLists)
@@ -72,10 +72,10 @@ vector<int> dagLongestPath(vector<vector<edge>> &adjLists, int start)
             {
                 int newDist = distance[nodeIdx] + edge.weight;
 
-                if (distance[edge.dest] == INT_MAX)
-                    distance[edge.dest] = newDist;
+                if (distance[edge.to] == INT_MAX)
+                    distance[edge.to] = newDist;
                 else
-                    distance[edge.dest] = min(distance[edge.dest], newDist);
+                    distance[edge.to] = min(distance[edge.to], newDist);
             }
         }
     }
