@@ -35,19 +35,26 @@ ListNode *mergeTwoLists(ListNode *root1, ListNode *root2)
         }
     }
 
-    while (a)
-    {
+    if (a != nullptr)
         res->next = a;
-        a = a->next;
-        res = res->next;
-    }
 
-    while (b)
-    {
+    if (b != nullptr)
         res->next = b;
-        b = b->next;
-        res = res->next;
-    }
+
+    // alter
+    // while (a)
+    // {
+    //     res->next = a;
+    //     a = a->next;
+    //     res = res->next;
+    // }
+
+    // while (b)
+    // {
+    //     res->next = b;
+    //     b = b->next;
+    //     res = res->next;
+    // }
 
     return head->next;
 }
