@@ -38,9 +38,9 @@ vector<int> dijkstrasShortestPath(vector<vector<WeightedEdge>> &adjLists, int sr
 
         for (auto neighbour : adjLists[edge.to])
         {
-            if (!visited[neighbour.to] && distance[neighbour.to] > distance[edge.to] + edge.weight)
+            if (!visited[neighbour.to] && distance[neighbour.to] > distance[edge.to] + neighbour.weight)
             {
-                distance[neighbour.to] = distance[edge.to] + edge.weight;
+                distance[neighbour.to] = distance[edge.to] + neighbour.weight;
                 pq.push({neighbour.to, distance[neighbour.to]});
             }
         }
