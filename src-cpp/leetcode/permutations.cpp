@@ -24,11 +24,11 @@ void permute(vector<int> &nums, int i, vector<vector<int>> &perms)
 }
 
 // backtracting
-void backtrack(vector<vector<int>> &res, vector<int> &nums, bitset<21> &bs, vector<int> &temp)
+void backtrack(vector<vector<int>> &res, vector<int> &nums, bitset<21> &bs, vector<int> &perm)
 {
-    if (temp.size() == nums.size())
+    if (perm.size() == nums.size())
     {
-        res.push_back(temp);
+        res.push_back(perm);
         return;
     }
 
@@ -36,13 +36,13 @@ void backtrack(vector<vector<int>> &res, vector<int> &nums, bitset<21> &bs, vect
     {
         if (bs.test(nums[i] + 10) != 1)
         {
-            temp.push_back(nums[i]);
+            perm.push_back(nums[i]);
             bs.set(nums[i] + 10);
 
-            backtrack(res, nums, bs, temp);
+            backtrack(res, nums, bs, perm);
 
             bs.flip(nums[i] + 10);
-            temp.pop_back();
+            perm.pop_back();
         }
     }
 }
@@ -50,10 +50,10 @@ void backtrack(vector<vector<int>> &res, vector<int> &nums, bitset<21> &bs, vect
 vector<vector<int>> permute(vector<int> &nums)
 {
     vector<vector<int>> res;
-    vector<int> temp;
+    vector<int> perm;
     bitset<21> bs(0);
 
-    backtrack(res, nums, bs, temp);
+    backtrack(res, nums, bs, perm);
 
     return res;
 }
