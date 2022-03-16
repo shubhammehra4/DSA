@@ -10,7 +10,7 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-ListNode *middleNode(ListNode *head)
+ListNode *getFirstHalf(ListNode *head)
 {
     auto slow = head;
     auto fast = head->next;
@@ -43,11 +43,11 @@ ListNode *reverseList(ListNode *head)
 int pairSum(ListNode *head)
 {
     int res = 0;
-    auto mid = middleNode(head);
+    auto firstHalf = getFirstHalf(head);
     auto p = head;
-    auto q = reverseList(mid->next);
+    auto q = reverseList(firstHalf->next);
 
-    mid->next = NULL;
+    firstHalf->next = NULL;
 
     int res = 0;
     while (p != nullptr && q != nullptr)
@@ -57,4 +57,31 @@ int pairSum(ListNode *head)
     }
 
     return res;
+}
+
+// stack
+int pairSum(ListNode *head)
+{
+    stack<int> st;
+
+    auto slow = head;
+    auto fast = head;
+    while (fast && fast->next)
+    {
+        st.push(slow->val);
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    auto mid = slow;
+    int maxSum = INT_MIN;
+
+    while (!st.empty())
+    {
+        maxSum = max(maxSum, st.top() + mid->val);
+        st.pop();
+        mid = mid->next;
+    }
+
+    return maxSum;
 }
