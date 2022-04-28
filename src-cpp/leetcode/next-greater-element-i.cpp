@@ -5,7 +5,7 @@ using namespace std;
 vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2)
 {
     int n = nums2.size();
-    unordered_map<int, int> mp; // num->greaterIdx
+    unordered_map<int, int> mp; // num->greaterNum
     stack<int> st;
 
     for (auto num : nums2)
@@ -30,7 +30,7 @@ vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2)
 vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2)
 {
     int n = nums2.size();
-    unordered_map<int, int> mp; // num->greaterIdx
+    unordered_map<int, int> mp; // num->greaterNum
     mp[nums2.back()] = -1;
 
     for (int i = 0; i < n - 1; i++)
