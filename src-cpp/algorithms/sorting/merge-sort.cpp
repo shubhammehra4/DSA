@@ -1,19 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int> &arr, int low, int mid, int high)
+/**
+ * approach
+ *  divide the array into 2 parts, after sorrting the 2 parts merge them back
+ *
+ * properties
+    - stable
+    - divide and conquer
+    - not in place sorting
+    - slower for small inputs
+    - avg case O(n * logn)
+ */
+
+void merge(vector<int> &arr, int l, int mid, int r)
 {
-    int n = mid - low + 1;
-    int m = high - mid;
-    vector<int> left(n);
-    vector<int> right(m);
+    int n = mid - l + 1;
+    int m = r - mid;
+    vector<int> left(begin(arr) + l, begin(arr) + mid + 1);
+    vector<int> right(begin(arr) + mid + 1, begin(arr) + r + 1);
+    // alter
+    // vector<int> left(n);
+    // vector<int> right(m);
 
-    for (int i = 0; i < n; i++)
-        left[i] = arr[low + i];
-    for (int j = 0; j < m; j++)
-        right[j] = arr[mid + 1 + j];
+    // for (int i = 0; i < n; i++)
+    //     left[i] = arr[l + i];
+    // for (int j = 0; j < m; j++)
+    //     right[j] = arr[mid + 1 + j];
 
-    int i = 0, j = 0, k = low;
+    int i = 0, j = 0, k = l;
     while (i < n && j < m)
     {
         if (left[i] <= right[j])
@@ -34,39 +49,34 @@ void mergeSort(vector<int> &arr, int l, int r)
     if (l < r)
     {
         int m = l + (r - l) / 2;
+
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
+
         merge(arr, l, m, r);
     }
 }
 
-void mergeSortIter(vector<int> &arr)
+// recursive
+void mergeSort(vector<int> &arr)
 {
-    int n = arr.size();
-    int curr_size;  // For current size of subarrays to be merged
-    int left_start; // For picking starting index of left subarray to be merged
-
-    // Bottom Up Merging
-    for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size)
-    {
-        for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size)
-        {
-            int mid = min(left_start + curr_size - 1, n - 1);
-            int right_end = min(left_start + 2 * curr_size - 1, n - 1);
-
-            merge(arr, left_start, mid, right_end);
-        }
-    }
+    return mergeSort(arr, 0, size(arr) - 1);
 }
 
-int main()
+// iterative
+void mergeSort(vector<int> &arr)
 {
-    vector<int> a = {-1, 2, 8, 7, 9};
+    int n = arr.size();
 
-    mergeSort(a, 0, a.size() - 1);
+    // Bottom Up Merging
+    for (int intervalSize = 1; intervalSize < n; intervalSize *= 2)
+    {
+        for (int l = 0; l < n - 1; l += 2 * intervalSize)
+        {
+            int mid = min(l + intervalSize - 1, n - 1);
+            int r = min(l + 2 * intervalSize - 1, n - 1);
 
-    for (auto &i : a)
-        cout << i << " ";
-
-    return 0;
+            merge(arr, l, mid, r);
+        }
+    }
 }
