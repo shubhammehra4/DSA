@@ -11,6 +11,7 @@ private:
 
 public:
     PriorityQueue(std::function<bool(int, int)> comp) : comparator(comp){};
+
     int front()
     {
         return this->items.front();

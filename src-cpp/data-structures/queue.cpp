@@ -27,7 +27,7 @@ public:
         if (tail == nullptr)
         {
             head = tail = newNode;
-            return head->data;
+            return tail->data;
         }
 
         tail->next = newNode;
